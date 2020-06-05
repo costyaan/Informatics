@@ -1,9 +1,7 @@
 program project1;
 
-uses Unit1;
-
 var
-  cur,i, j, N, M, vitok, mv:integer;
+  cur,i, j, N, M, vitok, mv, aht:integer;
   upyes:boolean;
 
   mas:array of array of integer;
@@ -30,47 +28,64 @@ begin
   readln(M);
 
   setlength(mas,N);
-  for i:=1 to N do
+  for i:=0 to N-1 do
      Setlength(mas[i],M);
 
-  i:=1;
-  j:=1;
+  i:=0;
+  j:=0;
   cur:=1;
+
   if N<M then
      mv:=N div 2
   else
      mv:=M div 2;
+
+  if (N mod 2 = 1) and (M mod 2 = 1) then aht:=1;
+
   for vitok:=0 to mv-1 do
   begin
-     for j:=1+vitok to M-vitok-1 do
+
+     for j:=vitok to M-1-vitok do              //по верхнему ряду
        begin
          mas[i,j]:=cur;
          updo;
        end;
 
-     for i:=1+vitok to N-vitok-1 do
+write('.');
+
+     for i:=1+vitok to N-1-vitok do                //по правому ряду
        begin
          mas[i,j]:=cur;
          updo;
        end;
 
-      for j:=M-vitok downto 1+vitok+1 do
+write('.');
+
+      for j:=M-2-vitok downto vitok do                //по нижнему ряду
        begin
          mas[i,j]:=cur;
          updo;
        end;
 
-      for i:=N-vitok to 1+vitok+1 do
+write('.');
+
+      for i:=N-2-vitok downto vitok+1 do                    //по левому ряду
        begin
          mas[i,j]:=cur;
          updo;
        end;
+
+write('.');
   end;
+vitok:=vitok+1;
+if aht = 1 then
+   mas[vitok,vitok]:=cur;
 
+ writeln;
 
-  for i:=1 to N do
+  for i:=0 to N-1 do
    begin
-   for j:=1 to M do
+   for j:=0 to M-1 do
       write(mas[i,j],' ');
    writeln;
    end;
